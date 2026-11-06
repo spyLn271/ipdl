@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<export xmlns="http://eu.europa.ec/fpi/fsd/export" generationDate="2026-10-23T17:05:43.888+02:00" globalFileId="1">
+  <sanctionEntity designationDetails="" unitedNationId="" euReferenceNumber="EU.1.1" logicalId="11">
+    <remark>Тестовая запись ЕС</remark>
+    <regulation programme="BLR" publicationDate="2011-06-21"/>
+    <subjectType code="person" classificationCode="P"/>
+    <nameAlias firstName="Viktor" middleName="Vladimirovich" lastName="TESTMAN" wholeName="Viktor Vladimirovich TESTMAN" nameLanguage="" strong="true"/>
+    <nameAlias wholeName="Виктор Владимирович ТЕСТМАН" nameLanguage="RU" strong="true"/>
+    <citizenship countryIso2Code="BY" countryDescription="BELARUS"/>
+    <birthdate birthdate="1958-05-26" year="1958"/>
+  </sanctionEntity>
+  <sanctionEntity euReferenceNumber="EU.1.2" logicalId="12">
+    <regulation programme="RUS" publicationDate="2022-03-15"/>
+    <subjectType code="enterprise" classificationCode="E"/>
+    <nameAlias wholeName="Northwind Trading Company" strong="true"/>
+    <citizenship countryIso2Code="00" countryDescription="UNKNOWN"/>
+  </sanctionEntity>
+</export>

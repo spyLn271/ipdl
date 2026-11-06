@@ -1,0 +1,20 @@
+<?xml version="1.0" standalone="yes"?>
+<sdnList xmlns="https://sanctionslistservice.ofac.treas.gov/api/PublicationPreview/exports/XML">
+  <publshInformation><Publish_Date>10/21/2026</Publish_Date><Record_Count>2</Record_Count></publshInformation>
+  <sdnEntry>
+    <uid>9001</uid>
+    <firstName>Viktar Uladzimiravich</firstName>
+    <lastName>TESTMAN</lastName>
+    <sdnType>Individual</sdnType>
+    <programList><program>BELARUS</program></programList>
+    <akaList><aka><uid>1</uid><type>a.k.a.</type><category>strong</category><firstName>Viktor Vladimirovich</firstName><lastName>TESTMAN</lastName></aka></akaList>
+    <nationalityList><nationality><uid>2</uid><country>Belarus</country><mainEntry>true</mainEntry></nationality></nationalityList>
+    <dateOfBirthList><dateOfBirthItem><uid>3</uid><dateOfBirth>26 May 1958</dateOfBirth><mainEntry>true</mainEntry></dateOfBirthItem></dateOfBirthList>
+  </sdnEntry>
+  <sdnEntry>
+    <uid>9002</uid>
+    <lastName>BANK ROSTEST</lastName>
+    <sdnType>Entity</sdnType>
+    <programList><program>RUSSIA-EO14024</program></programList>
+  </sdnEntry>
+</sdnList>

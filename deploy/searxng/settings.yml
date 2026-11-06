@@ -1,0 +1,57 @@
+# SearXNG для IPDL: внутренний метапоиск, доступен только сервисам docker compose.
+# Документация: https://docs.searxng.org/admin/settings/
+#
+# Набор поисковиков подобран по проверке с сервера (2026-10-27): Google, DuckDuckGo (веб),
+# Qwant и Mojeek отвечают капчей/блокировкой и исключены; Brave, Yandex, Google CSE, Yahoo,
+# Mwmbl, Bing News, DuckDuckGo News, Yahoo News — отвечают. Если поисковик перестанет отвечать,
+# SearXNG пропустит его сам (unresponsive_engines), а IPDL покажет это в предупреждениях портрета.
+use_default_settings:
+  engines:
+    keep_only:
+      - brave
+      - brave.news
+      - google cse
+      - yandex
+      - bing
+      - bing news
+      - duckduckgo news
+      - yahoo
+      - yahoo news
+      - mwmbl
+      - wikipedia
+
+general:
+  instance_name: "IPDL search"
+  enable_metrics: false
+
+search:
+  safe_search: 0
+  autocomplete: ""
+  default_lang: "all"
+  # JSON нужен API IPDL; HTML оставлен для ручной проверки администратором
+  formats: [html, json]
+
+server:
+  # secret_key задаётся переменной окружения SEARXNG_SECRET (docker compose)
+  limiter: false
+  public_instance: false
+  image_proxy: false
+  method: "GET"
+
+outgoing:
+  request_timeout: 5.0
+  max_request_timeout: 12.0
+  pool_connections: 100
+  pool_maxsize: 20
+
+engines:
+  - name: yandex
+    disabled: false
+  - name: bing
+    disabled: false
+  - name: yahoo
+    disabled: false
+  - name: mwmbl
+    disabled: false
+  - name: yahoo news
+    inactive: false

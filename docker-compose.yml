@@ -1,0 +1,142 @@
+# Полный стек IPDL: веб, API, воркер, PostgreSQL, Redis, SearXNG, Ollama.
+#   cp .env.example .env   # задать POSTGRES_PASSWORD и SEARXNG_SECRET
+#   docker compose up -d --build
+#   docker compose exec api ipdl users create admin --role admin
+# Наружу публикуется только веб-интерфейс, и только на loopback: перед ним — обратный прокси
+# с HTTPS (Caddy/nginx). API, база, поиск и модель доступны лишь внутри сети compose.
+name: ipdl
+
+x-backend: &backend
+  build: .
+  image: ipdl/api:${IPDL_VERSION:-0.1.0}
+  env_file:
+    - path: .env
+      required: false
+  environment: &backend-env
+    IPDL_DB__URL: postgresql+asyncpg://ipdl:${POSTGRES_PASSWORD:?задайте POSTGRES_PASSWORD в .env}@postgres:5432/ipdl
+    IPDL_JOBS__REDIS_URL: redis://redis:6379/0
+    IPDL_SEARCH__BASE_URL: http://searxng:8080
+    IPDL_LLM__BASE_URL: http://ollama:11434
+  restart: unless-stopped
+  read_only: true
+  tmpfs:
+    - /tmp
+    # HOME пользователя app (uid 10001): asyncpg ищет в нём ~/.postgresql
+    - /home/app:uid=10001,gid=10001,mode=0700
+  security_opt:
+    - no-new-privileges:true
+
+services:
+  migrate:
+    <<: *backend
+    command: ["db", "upgrade"]
+    restart: "no"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  api:
+    <<: *backend
+    command: ["serve"]
+    environment:
+      <<: *backend-env
+      # API доступен только из сети compose (через web): адрес клиента — из X-Forwarded-For
+      IPDL_API__FORWARDED_ALLOW_IPS: "*"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+
+  worker:
+    <<: *backend
+    command: ["worker"]
+    healthcheck:
+      disable: true
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+      searxng:
+        condition: service_started
+
+  web:
+    build: ./web
+    image: ipdl/web:${IPDL_VERSION:-0.1.0}
+    environment:
+      API_URL: http://api:8000
+    ports:
+      - "127.0.0.1:${IPDL_WEB_PORT:-3000}:3000"
+    depends_on:
+      - api
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+
+  postgres:
+    image: postgres:17.11-alpine
+    environment:
+      POSTGRES_USER: ipdl
+      POSTGRES_DB: ipdl
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?задайте POSTGRES_PASSWORD в .env}
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ipdl -d ipdl"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  redis:
+    image: redis:7.4.10-alpine
+    # Только очередь задач: состояние портретов хранится в PostgreSQL
+    command: ["redis-server", "--save", "", "--appendonly", "no", "--maxmemory", "256mb"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  searxng:
+    image: searxng/searxng:2026.10.23-629368e40
+    environment:
+      SEARXNG_SECRET: ${SEARXNG_SECRET:?задайте SEARXNG_SECRET в .env}
+    volumes:
+      - ./deploy/searxng/settings.yml:/etc/searxng/settings.yml:ro
+    restart: unless-stopped
+    cap_drop: [ALL]
+    cap_add: [CHOWN, SETGID, SETUID]
+    security_opt:
+      - no-new-privileges:true
+
+  ollama:
+    image: ollama/ollama:0.40.2
+    volumes:
+      - ollama:/root/.ollama
+    environment:
+      OLLAMA_KEEP_ALIVE: 30m
+      OLLAMA_NUM_PARALLEL: ${OLLAMA_NUM_PARALLEL:-2}
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    restart: unless-stopped
+
+  ollama-init:
+    image: ollama/ollama:0.40.2
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      OLLAMA_HOST: ollama:11434
+      LLM_MODEL: ${IPDL_LLM__MODEL:-qwen3:8b}
+    entrypoint: ["/bin/sh", "-c", "ollama pull \"$$LLM_MODEL\""]
+    restart: "no"
+
+volumes:
+  postgres:
+  ollama:

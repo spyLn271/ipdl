@@ -1,0 +1,498 @@
+{
+  "person": {
+    "id": "00000000-0000-0000-0000-000000000002",
+    "full_name": "Иванов Пётр Сергеевич",
+    "latin_name": null,
+    "birth_date": "1970-03-05",
+    "citizenship": null,
+    "context": "Министерство финансов Беларуси",
+    "pep_category": "foreign",
+    "pep_tenure": "current",
+    "position": "Министр финансов",
+    "organization": "Министерство финансов Республики Беларусь",
+    "country": "BY",
+    "risk_score": 85,
+    "risk_level": "high",
+    "created_at": "2026-10-27T12:00:00Z",
+    "updated_at": "2026-10-27T12:00:00Z",
+    "latest": {
+      "id": "00000000-0000-0000-0000-000000000001",
+      "version": 1,
+      "status": "done",
+      "stage": "assess",
+      "progress": 100,
+      "error": null,
+      "created_at": "2026-10-27T11:56:00Z",
+      "started_at": "2026-10-27T11:56:00Z",
+      "finished_at": "2026-10-27T12:00:00Z",
+      "reviewed_at": "2026-10-27T12:00:00Z",
+      "created_by_name": "Аналитик Иванова А.",
+      "score": 85,
+      "level": "high"
+    }
+  },
+  "current": {
+    "meta": {
+      "id": "00000000-0000-0000-0000-000000000001",
+      "version": 1,
+      "status": "done",
+      "stage": "assess",
+      "progress": 100,
+      "error": null,
+      "created_at": "2026-10-27T11:56:00Z",
+      "started_at": "2026-10-27T11:56:00Z",
+      "finished_at": "2026-10-27T12:00:00Z",
+      "reviewed_at": "2026-10-27T12:00:00Z",
+      "created_by_name": "Аналитик Иванова А.",
+      "score": 85,
+      "level": "high"
+    },
+    "person_id": "00000000-0000-0000-0000-000000000002",
+    "portrait": {
+      "subject": {
+        "full_name": "Иванов Пётр Сергеевич",
+        "latin_name": null,
+        "birth_date": "1970-03-05",
+        "citizenship": null,
+        "context": "Министерство финансов Беларуси"
+      },
+      "identity": {
+        "full_name": "Иванов Пётр Сергеевич",
+        "latin_name": "Pyotr Ivanov",
+        "birth_date": {
+          "value": "1970-03-05",
+          "evidence": []
+        },
+        "birth_place": {
+          "value": "Минск",
+          "evidence": [
+            {
+              "source_id": "S2",
+              "quote": "род. 5 марта 1970 года в Минске"
+            }
+          ]
+        },
+        "citizenship": [
+          "BY"
+        ],
+        "conflicts": {}
+      },
+      "pep": {
+        "category": "foreign",
+        "tenure": "current",
+        "clause": "Закон РК № 191-IV, подпункт 3-3) статьи 1, абз. 6",
+        "rationale": "По данным источников лицо занимает должность в органе власти или с публичной функцией иностранного государства: Министр финансов, Министерство финансов Республики Беларусь, Беларусь, 2019.",
+        "basis": [
+          0
+        ],
+        "measures": [
+          "проверка принадлежности (причастности) клиента и бенефициарного собственника к ПДЛ, его супруге (супругу) и близким родственникам",
+          "оценка репутации ПДЛ в отношении причастности к ОД/ФТ/ФРОМУ",
+          "письменное разрешение руководящего работника на установление/продолжение деловых отношений",
+          "доступные меры для установления источника происхождения денег и иного имущества",
+          "усиленные меры надлежащей проверки на постоянной основе"
+        ]
+      },
+      "risk": {
+        "score": 85,
+        "level": "high",
+        "method": "ipdl-risk-2026.10",
+        "method_title": "Предварительная оценка риска ИПДЛ, версия 2026.10",
+        "factors": [
+          {
+            "key": "position",
+            "level": "high",
+            "auto_level": "high",
+            "weight": 0.2,
+            "comment": "ИПДЛ: Министр финансов",
+            "evidence": [
+              "S1",
+              "S2"
+            ],
+            "overridden": false
+          },
+          {
+            "key": "jurisdiction",
+            "level": "low",
+            "auto_level": "low",
+            "weight": 0.15,
+            "comment": "Страны: Беларусь; не входят в списки FATF (FATF на 19.06.2026) и перечень льготного налогообложения",
+            "evidence": [],
+            "overridden": false
+          },
+          {
+            "key": "wealth",
+            "level": "medium",
+            "auto_level": "medium",
+            "weight": 0.1,
+            "comment": "публикации о налоговых нарушениях или коррупции; источники благосостояния требуют подтверждения (декларации, отчётность)",
+            "evidence": [
+              "S3"
+            ],
+            "overridden": false
+          },
+          {
+            "key": "sanctions",
+            "level": "high",
+            "auto_level": "high",
+            "weight": 0.2,
+            "comment": "Возможное совпадение — требуется ручная проверка: Сводный санкционный перечень СБ ООН: PETR SERGEEVICH IVANOV (TSi.001)",
+            "evidence": [],
+            "overridden": false
+          },
+          {
+            "key": "legal",
+            "level": "high",
+            "auto_level": "high",
+            "weight": 0.1,
+            "comment": "Уголовное дело о получении взятки в особо крупном размере",
+            "evidence": [
+              "S3"
+            ],
+            "overridden": false
+          },
+          {
+            "key": "adverse_media",
+            "level": "high",
+            "auto_level": "high",
+            "weight": 0.1,
+            "comment": "Публикаций: 1 (высокая значимость — 1, средняя — 0, низкая — 0), источников: 1",
+            "evidence": [
+              "S3"
+            ],
+            "overridden": false
+          },
+          {
+            "key": "related",
+            "level": "low",
+            "auto_level": "low",
+            "weight": 0.1,
+            "comment": "Связанных лиц: 1, компаний: 0; признаков повышенного риска не найдено",
+            "evidence": [
+              "S2"
+            ],
+            "overridden": false
+          },
+          {
+            "key": "transactions",
+            "level": "low",
+            "auto_level": "no_data",
+            "weight": 0.05,
+            "comment": "Сообщений о подозрительных операциях не поступало",
+            "evidence": [],
+            "overridden": true
+          }
+        ],
+        "floors": [
+          "Возможное совпадение с официальным санкционным списком (ООН, OFAC, ЕС, Великобритания)"
+        ],
+        "assessed_at": "2026-10-27T22:08:22.817470Z",
+        "next_review": "2027-04-27"
+      },
+      "positions": [
+        {
+          "title": "Министр финансов",
+          "organization": "Министерство финансов Республики Беларусь",
+          "country": "BY",
+          "start": "2019",
+          "end": null,
+          "is_current": true,
+          "category": "state_body",
+          "evidence": [
+            {
+              "source_id": "S1",
+              "quote": "назначен министром финансов Республики Беларусь указом Президента"
+            },
+            {
+              "source_id": "S2",
+              "quote": "с 2019 года занимает пост министра финансов Республики Беларусь"
+            }
+          ]
+        }
+      ],
+      "relations": [
+        {
+          "name": "Анна Иванова",
+          "relation": "spouse",
+          "note": "владеет Alfa Holdings Ltd",
+          "is_public_official": false,
+          "evidence": [
+            {
+              "source_id": "S2",
+              "quote": "Супруга Петра Иванова — Анна Иванова, владеет кипрской компанией"
+            }
+          ]
+        }
+      ],
+      "companies": [],
+      "adverse": [
+        {
+          "category": "corruption",
+          "summary": "Возбуждено уголовное дело о получении взятки",
+          "date": "2022",
+          "severity": "high",
+          "evidence": [
+            {
+              "source_id": "S3",
+              "quote": "против министра Петра Иванова возбуждено уголовное дело о получении взятки"
+            }
+          ]
+        }
+      ],
+      "legal": [
+        {
+          "kind": "criminal_case",
+          "summary": "Уголовное дело о получении взятки в особо крупном размере",
+          "jurisdiction": "BY",
+          "status": "возбуждено",
+          "date": "2022",
+          "evidence": [
+            {
+              "source_id": "S3",
+              "quote": "возбуждено уголовное дело о получении взятки"
+            }
+          ]
+        }
+      ],
+      "timeline": [
+        {
+          "date": "1992",
+          "summary": "Окончил БГЭУ",
+          "kind": "event",
+          "source_id": "S2"
+        },
+        {
+          "date": "2019",
+          "summary": "Начало работы: Министр финансов, Министерство финансов Республики Беларусь",
+          "kind": "position",
+          "source_id": "S1"
+        },
+        {
+          "date": "2022",
+          "summary": "Возбуждено уголовное дело о получении взятки",
+          "kind": "adverse",
+          "source_id": "S3"
+        }
+      ],
+      "sanctions": {
+        "checked_at": "2026-10-27T22:08:22.817470Z",
+        "lists": [
+          {
+            "id": "un",
+            "name": "Сводный санкционный перечень СБ ООН",
+            "published_at": "2026-10-26T00:00:00Z",
+            "fetched_at": "2026-10-27T22:08:22.691992Z",
+            "entries": 1000
+          }
+        ],
+        "matches": [
+          {
+            "query": null,
+            "entity_type": "person",
+            "list_id": "un",
+            "list_name": "Сводный санкционный перечень СБ ООН",
+            "entry_ref": "TSi.001",
+            "matched_name": "PETR SERGEEVICH IVANOV",
+            "primary_name": "PETR SERGEEVICH IVANOV",
+            "score": 100.0,
+            "birth_dates": [],
+            "nationalities": [],
+            "programs": [],
+            "listed_on": null,
+            "url": null,
+            "dob_match": true
+          }
+        ],
+        "related": []
+      },
+      "sources": [
+        {
+          "id": "S1",
+          "url": "https://www.minfin.gov.by/ru/about/ivanov",
+          "title": "Министр финансов — Иванов Пётр Сергеевич",
+          "domain": "minfin.gov.by",
+          "kind": "official",
+          "snippet": "Иванов Пётр Сергеевич, министр.",
+          "published": "2019-01-01",
+          "retrieved_at": "2026-10-27T22:08:22.817470Z",
+          "engines": [
+            "brave"
+          ],
+          "topics": [
+            "adverse",
+            "companies",
+            "identity",
+            "legal",
+            "news",
+            "positions",
+            "relations",
+            "sanctions"
+          ],
+          "relevance": 5.7,
+          "fetched": true,
+          "analyzed": true,
+          "facts": 1,
+          "verification": "confirmed"
+        },
+        {
+          "id": "S2",
+          "url": "https://ru.wikipedia.org/wiki/Иванов,_Пётр_Сергеевич",
+          "title": "Иванов, Пётр Сергеевич — Википедия",
+          "domain": "ru.wikipedia.org",
+          "kind": "reference",
+          "snippet": "Пётр Сергеевич Иванов — белорусский государственный деятель, министр финансов.",
+          "published": "2019-01-01",
+          "retrieved_at": "2026-10-27T22:08:22.817470Z",
+          "engines": [
+            "brave"
+          ],
+          "topics": [
+            "adverse",
+            "companies",
+            "identity",
+            "legal",
+            "news",
+            "positions",
+            "relations",
+            "sanctions"
+          ],
+          "relevance": 5.5,
+          "fetched": true,
+          "analyzed": true,
+          "facts": 3,
+          "verification": "unverified"
+        },
+        {
+          "id": "S3",
+          "url": "https://news.example.com/2022/ivanov-case",
+          "title": "Против Петра Иванова возбуждено дело",
+          "domain": "news.example.com",
+          "kind": "media",
+          "snippet": "В 2022 году против министра Петра Иванова возбуждено уголовное дело.",
+          "published": "2022-01-01",
+          "retrieved_at": "2026-10-27T22:08:22.817470Z",
+          "engines": [
+            "bing news"
+          ],
+          "topics": [
+            "adverse",
+            "companies",
+            "identity",
+            "legal",
+            "news",
+            "positions",
+            "relations",
+            "sanctions"
+          ],
+          "relevance": 5.2,
+          "fetched": true,
+          "analyzed": true,
+          "facts": 2,
+          "verification": "unverified"
+        }
+      ],
+      "conclusion": "Иванов Пётр Сергеевич — Министр финансов, Министерство финансов Республики Беларусь. По данным источников лицо занимает должность в органе власти или с публичной функцией иностранного государства: Министр финансов, Министерство финансов Республики Беларусь, Беларусь, 2019. Предварительный уровень риска: высокий (85/100, методика ipdl-risk-2026.10). Факторы высокого риска: ИПДЛ: Министр финансов; Возможное совпадение — требуется ручная проверка: Сводный санкционный перечень СБ ООН: PETR SERGEEVICH IVANOV (TSi.001); Уголовное дело о получении взятки в особо крупном размере; Публикаций: 1 (высокая значимость — 1, средняя — 0, низкая — 0), источников: 1. Минимальный уровень установлен потому, что: Возможное совпадение с официальным санкционным списком (ООН, OFAC, ЕС, Великобритания). Применяются меры пункта 1 статьи 8 Закона РК № 191-IV, включая усиленную надлежащую проверку на постоянной основе и установление источника происхождения средств.",
+      "limitations": [
+        "Портрет предварительный: это не официальное заключение и не результат полноценного санкционного, PEP/ИПДЛ или adverse media-скрининга. Сведения и ссылки необходимо перепроверить на дату принятия решения.",
+        "Отсутствие сведений в открытых источниках не означает их отсутствия в действительности.",
+        "Совпадения с санкционными списками — возможные: личность подтверждается по дате рождения, гражданству и документам.",
+        "Публикации СМИ не являются доказательством; факты подтверждаются официальными источниками.",
+        "Факты извлечены автоматически (локальная языковая модель) и сопровождаются цитатами — проверьте их по ссылкам на источники."
+      ],
+      "warnings": [
+        "Поисковики отвечали с ошибками: duckduckgo."
+      ],
+      "stats": {
+        "search_ok": true,
+        "llm_used": true,
+        "queries": 17,
+        "results": 85,
+        "sources": 3,
+        "fetched": 3,
+        "analyzed": 3,
+        "duration_s": 0.4,
+        "model": "qwen3:8b"
+      },
+      "generated_at": "2026-10-27T22:08:22.817470Z"
+    },
+    "review": {
+      "reviewer": "Аналитик Иванова А.",
+      "reviewed_at": "2026-10-27T12:00:00Z",
+      "pep_category": null,
+      "pep_tenure": null,
+      "pep_comment": null,
+      "conclusion": null,
+      "factors": {
+        "transactions": {
+          "level": "low",
+          "comment": "Сообщений о подозрительных операциях не поступало"
+        }
+      },
+      "sources": {
+        "S1": "confirmed"
+      }
+    }
+  },
+  "versions": [
+    {
+      "id": "00000000-0000-0000-0000-000000000001",
+      "version": 1,
+      "status": "done",
+      "stage": "assess",
+      "progress": 100,
+      "error": null,
+      "created_at": "2026-10-27T11:56:00Z",
+      "started_at": "2026-10-27T11:56:00Z",
+      "finished_at": "2026-10-27T12:00:00Z",
+      "reviewed_at": "2026-10-27T12:00:00Z",
+      "created_by_name": "Аналитик Иванова А.",
+      "score": 85,
+      "level": "high"
+    }
+  ],
+  "requests": [
+    {
+      "id": "00000000-0000-0000-0000-000000000005",
+      "partner": {
+        "id": "00000000-0000-0000-0000-000000000003",
+        "country": "UZ",
+        "name": "ПФР партнёра (тест)",
+        "contact": null,
+        "is_active": true
+      },
+      "portrait_id": "00000000-0000-0000-0000-000000000001",
+      "direction": "outgoing",
+      "kind": "disclosure",
+      "status": "closed",
+      "purpose": "Ответ на запрос партнёра",
+      "legal_basis": "Принципы обмена информацией Эгмонт",
+      "response_note": null,
+      "created_at": "2026-10-27T12:00:00Z",
+      "updated_at": "2026-10-27T12:00:00Z",
+      "closed_at": "2026-10-27T12:00:00Z",
+      "created_by_name": "Аналитик Иванова А."
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000006",
+      "partner": {
+        "id": "00000000-0000-0000-0000-000000000004",
+        "country": "KG",
+        "name": "ПФР партнёра 2 (тест)",
+        "contact": null,
+        "is_active": true
+      },
+      "portrait_id": null,
+      "direction": "outgoing",
+      "kind": "info_request",
+      "status": "open",
+      "purpose": "Сведения о счетах и операциях",
+      "legal_basis": null,
+      "response_note": null,
+      "created_at": "2026-10-27T12:00:00Z",
+      "updated_at": "2026-10-27T12:00:00Z",
+      "closed_at": null,
+      "created_by_name": "Аналитик Иванова А."
+    }
+  ],
+  "can_edit": true
+}

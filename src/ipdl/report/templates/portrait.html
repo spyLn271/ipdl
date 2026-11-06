@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Портрет ИПДЛ — {{ p.identity.full_name }}</title>
+<style>
+  /* Токены совпадают с веб-интерфейсом (web/src/styles/tokens.css) */
+  @page {
+    size: A4;
+    margin: 16mm 14mm 18mm;
+    @bottom-left { content: "{{ org.system_name }} · {{ org.authority }} · для служебного пользования"; font: 7.5pt "Inter", "DejaVu Sans", sans-serif; color: #737373; }
+    @bottom-right { content: "стр. " counter(page) " из " counter(pages); font: 7.5pt "Inter", "DejaVu Sans", sans-serif; color: #737373; }
+  }
+  * { box-sizing: border-box; }
+  body { font: 9pt/1.45 "Inter", "DejaVu Sans", "Liberation Sans", sans-serif; color: #171717; margin: 0; }
+  h1 { font-size: 17pt; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+  h2 { font-size: 8pt; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: #525252; margin: 0 0 6pt; }
+  .muted { color: #737373; }
+  .mono { font-family: "DejaVu Sans Mono", monospace; font-size: 8pt; }
+  .bar { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #e5e5e5; padding-bottom: 8pt; margin-bottom: 10pt; }
+  .card { border: 1px solid #e5e5e5; border-radius: 8pt; padding: 9pt 10pt; margin-bottom: 9pt; }
+  .grid > .card, .keep { page-break-inside: avoid; }
+  tr { page-break-inside: avoid; }
+  h2 { page-break-after: avoid; }
+  .grid { display: flex; gap: 9pt; }
+  .grid > .card { flex: 1; }
+  .kv { margin: 0 0 5pt; }
+  .kv .k { font-size: 7.5pt; color: #737373; }
+  .kv .v { font-weight: 500; }
+  .badge { display: inline-block; padding: 1pt 6pt; border-radius: 99pt; font-size: 7.5pt; font-weight: 600; white-space: nowrap; }
+  .low { background: #dcfce7; color: #166534; }
+  .medium { background: #ffedd5; color: #9a3412; }
+  .high { background: #fee2e2; color: #b91c1c; }
+  .no_data, .neutral { background: #f5f5f5; color: #404040; }
+  .score { font-size: 30pt; font-weight: 600; line-height: 1; }
+  .scale { display: flex; height: 6pt; border-radius: 99pt; overflow: hidden; margin: 6pt 0 3pt; }
+  .scale div { flex: 1; } .s1 { background: #16a34a; } .s2 { background: #ea580c; } .s3 { background: #dc2626; }
+  .scale-labels { display: flex; justify-content: space-between; font-size: 7pt; color: #737373; }
+  table { width: 100%; border-collapse: collapse; }
+  td, th { text-align: left; vertical-align: top; padding: 4pt 4pt 4pt 0; border-top: 1px solid #f0f0f0; }
+  tr:first-child td { border-top: 0; }
+  th { font-size: 7.5pt; color: #737373; font-weight: 500; }
+  .right { text-align: right; }
+  .note { font-size: 8pt; color: #525252; }
+  .warn { background: #fff7ed; border: 1px solid #fed7aa; border-radius: 6pt; padding: 5pt 7pt; margin-bottom: 8pt; font-size: 8pt; color: #9a3412; }
+  ul { margin: 0; padding-left: 12pt; } li { margin-bottom: 2pt; }
+  a { color: #1d4ed8; text-decoration: none; word-break: break-all; }
+</style>
+</head>
+<body>
+<div class="bar">
+  <div>
+    <div class="muted">{{ org.system_name }} · Реестр ИПДЛ · Портрет, версия {{ version }}</div>
+    <h1>{{ p.identity.full_name }}</h1>
+    {% if p.identity.latin_name %}<div class="muted">{{ p.identity.latin_name }}</div>{% endif %}
+  </div>
+  <div class="right muted">
+    Сформирован {{ p.generated_at.strftime("%d.%m.%Y") }}<br>
+    Выгружен {{ exported_at.strftime("%d.%m.%Y %H:%M") }} UTC
+  </div>
+</div>
+
+{% for w in p.warnings %}<div class="warn">{{ w }}</div>{% endfor %}
+
+<div class="grid">
+  <div class="card">
+    <h2>Идентификация</h2>
+    <div class="kv"><div class="k">Статус</div><div class="v"><span class="badge neutral">{{ pep_titles[p.pep.category] }}{% if p.pep.tenure.value != "unknown" %} · {{ labels.TENURE[p.pep.tenure] }}{% endif %}</span></div></div>
+    <div class="kv"><div class="k">Дата и место рождения</div><div class="v">{{ p.identity.birth_date.value if p.identity.birth_date else "—" }}{% if p.identity.birth_place %}, {{ p.identity.birth_place.value }}{% endif %}</div></div>
+    <div class="kv"><div class="k">Гражданство</div><div class="v">{{ p.identity.citizenship | countries }}</div></div>
+    {% set top = p.positions[0] if p.positions else none %}
+    <div class="kv"><div class="k">Должность</div><div class="v">{{ top.title if top else "—" }}</div></div>
+    <div class="kv"><div class="k">Орган / организация</div><div class="v">{{ (top.organization or "—") if top else "—" }}</div></div>
+    <div class="kv"><div class="k">Период</div><div class="v">{{ (top | period) if top else "—" }}</div></div>
+    {% for field, values in p.identity.conflicts.items() %}<div class="note">Источники расходятся: {{ values | join(", ") }}</div>{% endfor %}
+  </div>
+  <div class="card">
+    <h2>Итоговая оценка риска</h2>
+    <div><span class="score">{{ p.risk.score }}</span><span class="muted"> / 100</span>
+      <span class="badge {{ p.risk.level.value }}">Уровень: {{ level_titles[p.risk.level] }}</span></div>
+    <div class="scale"><div class="s1"></div><div class="s2"></div><div class="s3"></div></div>
+    <div class="scale-labels"><span>Низкий 0–33</span><span>Средний 34–66</span><span>Высокий 67–100</span></div>
+    <p class="note">Метод: {{ p.risk.method_title }}. Дата оценки: {{ p.risk.assessed_at.strftime("%d.%m.%Y") }}. Следующий пересмотр: {{ p.risk.next_review.strftime("%d.%m.%Y") }}.</p>
+    {% for f in p.risk.floors %}<p class="note">Минимальный уровень: {{ f }}</p>{% endfor %}
+  </div>
+</div>
+
+<div class="card keep">
+  <h2>Статус ИПДЛ</h2>
+  <p>{{ p.pep.rationale }}</p>
+  {% if p.pep.clause %}<p class="note">Основание: {{ p.pep.clause }}</p>{% endif %}
+  {% if p.pep.measures %}<ul class="note">{% for m in p.pep.measures %}<li>{{ m }}</li>{% endfor %}</ul>{% endif %}
+</div>
+
+<div class="card">
+  <h2>Факторы риска</h2>
+  <table>
+    {% for f in p.risk.factors %}
+    <tr><td style="width:30%"><b>{{ labels.FACTOR[f.key] }}</b></td>
+      <td class="note">{{ f.comment }}{% if f.overridden %} <i>(решение аналитика)</i>{% endif %}{% if f.evidence %} <span class="mono">[{{ f.evidence | join(", ") }}]</span>{% endif %}</td>
+      <td class="right" style="width:15%"><span class="badge {{ f.level.value }}">{{ labels.LEVEL[f.level] }}</span></td></tr>
+    {% endfor %}
+  </table>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h2>Связанные лица и компании</h2>
+    <table>
+      {% for r in p.relations[:8] %}<tr><td><b>{{ r.name }}</b><br><span class="note">{{ labels.RELATION[r.relation] }}{% if r.note %} · {{ r.note }}{% endif %}</span></td></tr>{% endfor %}
+      {% for c in p.companies[:8] %}<tr><td><b>{{ c.name }}</b><br><span class="note">{{ labels.COMPANY_ROLE[c.role] }}{% if c.share_percent is not none %}, {{ c.share_percent }} %{% endif %}{% if c.country %}, {{ c.country | country }}{% endif %}</span></td></tr>{% endfor %}
+      {% if not p.relations and not p.companies %}<tr><td class="muted">Не установлены</td></tr>{% endif %}
+    </table>
+  </div>
+  <div class="card">
+    <h2>Санкционный скрининг</h2>
+    <table>
+      {% for s in p.sanctions.lists %}<tr><td>{{ s.name }}</td><td class="right note">{{ s.published_at.strftime("%d.%m.%Y") if s.published_at else "" }}</td></tr>{% endfor %}
+    </table>
+    {% if p.sanctions.matches %}
+      <p class="note"><b>Возможные совпадения:</b></p>
+      <ul class="note">{% for m in p.sanctions.matches %}<li>{{ m.list_name }}: {{ m.primary_name }} ({{ m.entry_ref }}), {{ "%.0f"|format(m.score) }}%</li>{% endfor %}</ul>
+    {% elif p.sanctions.lists %}<p class="note">Совпадений не найдено.</p>{% endif %}
+  </div>
+</div>
+
+{% if p.adverse or p.legal %}
+<div class="card">
+  <h2>Негативные публикации и правовые сведения</h2>
+  <table>
+    {% for a in p.adverse %}<tr><td style="width:12%" class="mono">{{ a.date or "" }}</td><td>{{ a.summary }} <span class="mono">[{{ a.evidence | map(attribute="source_id") | join(", ") }}]</span></td><td class="right"><span class="badge {{ a.severity.value }}">{{ labels.ADVERSE[a.category] }}</span></td></tr>{% endfor %}
+    {% for l in p.legal %}<tr><td class="mono">{{ l.date or "" }}</td><td>{{ l.summary }}{% if l.status %} — {{ l.status }}{% endif %}</td><td class="right"><span class="badge neutral">{{ labels.LEGAL[l.kind] }}</span></td></tr>{% endfor %}
+  </table>
+</div>
+{% endif %}
+
+{% if p.timeline %}
+<div class="card">
+  <h2>Хронология</h2>
+  <table>
+    {% for e in p.timeline[-18:] %}<tr><td style="width:14%" class="mono">{{ e.date }}</td><td>{{ e.summary }}</td><td class="right mono muted">{{ e.source_id or "" }}</td></tr>{% endfor %}
+  </table>
+</div>
+{% endif %}
+
+<div class="card keep">
+  <h2>Заключение</h2>
+  <p>{{ p.conclusion }}</p>
+  {% if review and review.reviewer and review.reviewed_at %}<p class="note">Решение аналитика: {{ review.reviewer }}, {{ review.reviewed_at.strftime("%d.%m.%Y %H:%M") }} UTC</p>{% endif %}
+</div>
+
+<div class="card">
+  <h2>Источники</h2>
+  <table>
+    {% for s in p.sources if s.analyzed or s.fetched %}<tr><td style="width:7%" class="mono">{{ s.id }}</td><td>{{ s.title }}<br><a href="{{ s.url }}">{{ s.url }}</a></td><td class="right note" style="width:18%">{{ labels.SOURCE_KIND[s.kind] }} · {{ labels.VERIFICATION[s.verification] }}</td></tr>{% endfor %}
+  </table>
+</div>
+
+{% for l in p.limitations %}<p class="note">{{ l }}</p>{% endfor %}
+<p class="note"><b>{{ org.legal_notice }}</b></p>
+</body>
+</html>

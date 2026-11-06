@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Designations>
+  <DateGenerated>27/10/2026</DateGenerated>
+  <Designation>
+    <DateDesignated>17/12/2020</DateDesignated>
+    <UniqueID>BEL9999</UniqueID>
+    <Names>
+      <Name><Name1>Viktar</Name1><Name2>Uladzimiravich</Name2><Name6>TESTMAN</Name6><NameType>Primary Name</NameType></Name>
+      <Name><Name6>Viktor TESTMAN</Name6><NameType>Alias</NameType></Name>
+    </Names>
+    <NonLatinNames><NonLatinName><NameNonLatinScript>Віктар Уладзіміравіч Тэстман</NameNonLatinScript></NonLatinName></NonLatinNames>
+    <RegimeName>The Republic of Belarus (Sanctions) (EU Exit) Regulations 2019</RegimeName>
+    <IndividualEntityShip>Individual</IndividualEntityShip>
+    <IndividualDetails><Individual><DOBs><DOB>26/05/1958</DOB><DOB>dd/mm/1957</DOB></DOBs><Nationalities><Nationality>Belarus</Nationality></Nationalities></Individual></IndividualDetails>
+  </Designation>
+</Designations>

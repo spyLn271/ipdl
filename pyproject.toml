@@ -1,0 +1,203 @@
+[project]
+name = "ipdl"
+version = "0.1.0"
+description = "Реестр и аналитические портреты иностранных публичных должностных лиц (ИПДЛ) для AML/KYC"
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+license = { text = "Proprietary" }
+authors = [{ name = "IPDL" }]
+classifiers = [
+    "Private :: Do Not Upload",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Typing :: Typed",
+]
+dependencies = [
+    "alembic>=1.14",
+    "arq>=0.26",
+    "asyncpg>=0.30",
+    "babel>=2.16",
+    "fastapi>=0.115",
+    "httpx>=0.28",
+    "jinja2>=3.1",
+    "lxml>=5.3",
+    "prometheus-client>=0.21",
+    "pwdlib[argon2]>=0.2",
+    "pydantic>=2.10",
+    "pydantic-settings[yaml]>=2.7",
+    "pypdfium2>=4.30",
+    "python-docx>=1.2",
+    "pyyaml>=6.0.2",
+    "rapidfuzz>=3.11",
+    "redis>=5.2",
+    "rich>=13.9",
+    "sqlalchemy[asyncio]>=2.0.36",
+    "structlog>=24.4",
+    "tenacity>=9.0",
+    "trafilatura>=2.0",
+    "typer>=0.15",
+    "uvicorn[standard]>=0.34",
+    "weasyprint>=63.0",
+]
+
+[project.scripts]
+ipdl = "ipdl.cli:app"
+
+[dependency-groups]
+dev = [
+    "mypy>=1.14",
+    "pre-commit>=4.0",
+    "pytest>=8.3",
+    "pytest-asyncio>=0.25",
+    "pytest-cov>=6.0",
+    "respx>=0.22",
+    "ruff>=0.9",
+    "types-pyyaml>=6.0",
+    "types-lxml>=2024.12",
+]
+
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ipdl"]
+
+# ---------------------------------------------------------------- ruff
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["src", "tests"]
+extend-exclude = ["web"]
+
+[tool.ruff.lint]
+select = [
+    "A",     # flake8-builtins
+    "ANN",   # flake8-annotations
+    "ARG",   # flake8-unused-arguments
+    "ASYNC", # flake8-async
+    "B",     # flake8-bugbear
+    "BLE",   # flake8-blind-except
+    "C4",    # flake8-comprehensions
+    "DTZ",   # flake8-datetimez
+    "E",     # pycodestyle errors
+    "ERA",   # eradicate (commented-out code)
+    "F",     # pyflakes
+    "FAST",  # FastAPI
+    "FLY",   # flynt
+    "FURB",  # refurb
+    "G",     # flake8-logging-format
+    "I",     # isort
+    "ISC",   # implicit string concatenation
+    "LOG",   # flake8-logging
+    "N",     # pep8-naming
+    "PERF",  # perflint
+    "PIE",   # flake8-pie
+    "PL",    # pylint
+    "PT",    # flake8-pytest-style
+    "PTH",   # flake8-use-pathlib
+    "Q",     # flake8-quotes
+    "RET",   # flake8-return
+    "RSE",   # flake8-raise
+    "RUF",   # ruff-specific
+    "S",     # flake8-bandit
+    "SIM",   # flake8-simplify
+    "T10",   # flake8-debugger
+    "T20",   # flake8-print
+    "TID",   # flake8-tidy-imports
+    "TRY",   # tryceratops
+    "UP",    # pyupgrade
+    "W",     # pycodestyle warnings
+]
+ignore = [
+    "ANN401",  # Any допустим в узких местах (XML, JSON)
+    "ISC001",  # конфликтует с ruff format
+    "PLR0911", # число return — решаем ревью, а не линтером
+    "PLR0912",
+    "PLR0913",
+    "PLR2004", # «магические» числа — пороги методики
+    "RUF001",  # кириллица в строках — это нормально для проекта
+    "RUF002",
+    "RUF003",
+    "TRY003",  # длинные сообщения в исключениях
+]
+
+[tool.ruff.lint.per-file-ignores]
+# В тестах допустимы составные assert и локальные импорты (изолируют тяжёлые зависимости)
+"tests/**" = ["ANN", "ARG", "PLC0415", "PLR0915", "PT018", "S101", "S105", "S106"]
+"src/ipdl/cli.py" = ["PLR0915"]
+"migrations/**" = ["INP001"]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = [
+    "typer.Argument",
+    "typer.Option",
+    "fastapi.Depends",
+    "fastapi.Query",
+    "fastapi.Security",
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["ipdl"]
+
+[tool.ruff.lint.pylint]
+max-args = 8
+
+[tool.ruff.format]
+docstring-code-format = true
+
+# ---------------------------------------------------------------- mypy
+[tool.mypy]
+python_version = "3.12"
+strict = true
+plugins = ["pydantic.mypy"]
+warn_unreachable = true
+mypy_path = "src"
+files = ["src", "tests", "migrations"]
+
+[[tool.mypy.overrides]]
+module = ["docx.*", "arq.*", "pypdfium2.*", "trafilatura.*", "weasyprint.*"]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["tests.*"]
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+
+# ---------------------------------------------------------------- pytest
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+addopts = ["-ra", "--strict-markers", "--strict-config", "-m", "not llm and not live"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+asyncio_default_test_loop_scope = "session"
+filterwarnings = [
+    "error",
+    "ignore::DeprecationWarning:docx.*",
+    # arq.Worker.close() вызывает устаревший redis.close()
+    "ignore:Call to deprecated close:DeprecationWarning",
+    # Хост без libharfbuzz-subset (в Docker-образе библиотека установлена)
+    "ignore:HarfBuzz-Subset will be required:DeprecationWarning",
+]
+markers = [
+    "db: требует PostgreSQL (IPDL_TEST_DATABASE_URL)",
+    "llm: требует запущенной локальной LLM (Ollama)",
+    "live: обращается к внешним сервисам (SearXNG, сайты санкционных списков)",
+]
+
+[tool.coverage.run]
+source = ["ipdl"]
+branch = true
+concurrency = ["greenlet", "thread"]
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true
+skip_covered = true
+exclude_also = ["if TYPE_CHECKING:", "raise NotImplementedError", "\\.\\.\\."]

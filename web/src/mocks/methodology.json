@@ -1,0 +1,266 @@
+{
+  "risk_model": {
+    "id": "ipdl-risk-2026.10",
+    "title": "Предварительная оценка риска ИПДЛ, версия 2026.10",
+    "bands": {
+      "low": [
+        0,
+        33
+      ],
+      "medium": [
+        34,
+        66
+      ],
+      "high": [
+        67,
+        100
+      ]
+    },
+    "points": {
+      "low": 10.0,
+      "medium": 55.0,
+      "high": 100.0
+    },
+    "no_data_points": 40.0,
+    "review_months": {
+      "low": 24,
+      "medium": 12,
+      "high": 6
+    },
+    "factors": {
+      "position": {
+        "weight": 0.2,
+        "title": "Должность и уровень влияния"
+      },
+      "jurisdiction": {
+        "weight": 0.15,
+        "title": "Юрисдикция / страна"
+      },
+      "wealth": {
+        "weight": 0.1,
+        "title": "Источники благосостояния"
+      },
+      "sanctions": {
+        "weight": 0.2,
+        "title": "Санкционные списки"
+      },
+      "legal": {
+        "weight": 0.1,
+        "title": "Уголовные дела и расследования"
+      },
+      "adverse_media": {
+        "weight": 0.1,
+        "title": "Негативные публикации в СМИ"
+      },
+      "related": {
+        "weight": 0.1,
+        "title": "Связанные лица и компании"
+      },
+      "transactions": {
+        "weight": 0.05,
+        "title": "Финансовые операции в РК"
+      }
+    },
+    "floors": {
+      "sanctions_match": {
+        "min_score": 85,
+        "reason": "Возможное совпадение с официальным санкционным списком (ООН, OFAC, ЕС, Великобритания)"
+      },
+      "foreign_pep_current": {
+        "min_score": 67,
+        "reason": "Действующее ИПДЛ / должностное лицо международной организации: п. 1 ст. 8 Закона РК № 191-IV требует усиленных мер надлежащей проверки на постоянной основе"
+      },
+      "foreign_pep_former": {
+        "min_score": 34,
+        "reason": "Бывшее ИПДЛ: риск сохраняется, мера — по оценке риска (Рекомендация 12 FATF)"
+      }
+    },
+    "legal_basis": {
+      "pep_definition": {
+        "act": "Закон Республики Казахстан от 28 августа 2009 года № 191-IV «О противодействии легализации (отмыванию) доходов, полученных преступным путем, финансированию терроризма и финансированию распространения оружия массового уничтожения»",
+        "clause": "подпункт 3-3) статьи 1",
+        "url": "https://adilet.zan.kz/rus/docs/Z090000191_",
+        "foreign_state_body": "абзац 6: «лицо, назначаемое или избираемое, занимающее какую-либо должность в законодательном, исполнительном, административном, судебном органах или вооруженных силах иностранного государства»",
+        "foreign_public_function": "абзац 7: «лицо, выполняющее какую-либо публичную функцию для иностранного государства»",
+        "international_org": "абзац 8: «лицо, занимающее руководящую должность в организациях, созданных государствами на основе соглашений, которые имеют статус международных договоров» (в редакции Закона РК от 12.06.2026 № 311-VIII)",
+        "domestic": "абзацы 2–5: лицо, занимающее ответственную государственную должность; должностное лицо; лицо, уполномоченное на выполнение государственных функций; лицо, исполняющее управленческие функции в государственной организации или субъекте квазигосударственного сектора"
+      },
+      "pep_measures": {
+        "clause": "пункт 1 статьи 8",
+        "measures": [
+          "проверка принадлежности (причастности) клиента и бенефициарного собственника к ПДЛ, его супруге (супругу) и близким родственникам",
+          "оценка репутации ПДЛ в отношении причастности к ОД/ФТ/ФРОМУ",
+          "письменное разрешение руководящего работника на установление/продолжение деловых отношений",
+          "доступные меры для установления источника происхождения денег и иного имущества",
+          "усиленные меры надлежащей проверки на постоянной основе"
+        ]
+      },
+      "domestic_list": {
+        "clause": "пункты 2–4 статьи 8",
+        "note": "Для ПДЛ Республики Казахстан меры пункта 1 применяются к лицам из перечня, утверждаемого Президентом РК, их супругам и близким родственникам с высоким уровнем риска; после прекращения полномочий — в течение двенадцати месяцев."
+      },
+      "fatf": {
+        "clause": "Рекомендация 12 FATF «Публичные должностные лица»",
+        "url": "https://www.fatf-gafi.org/en/topics/fatf-recommendations.html"
+      }
+    }
+  },
+  "jurisdictions": {
+    "fatf": {
+      "as_of": "2026-06-19",
+      "review_after_days": 130,
+      "source": "FATF: «High-Risk Jurisdictions subject to a Call for Action» и «Jurisdictions under Increased Monitoring», 19 июня 2026 г. (пленарное заседание 17–19 июня 2026 г.). Перечень сверен с уведомлением Security Bureau Гонконга от 26.06.2026.",
+      "source_url": "https://www.fatf-gafi.org/en/countries/black-and-grey-lists.html",
+      "call_for_action": {
+        "KP": "контрмеры",
+        "IR": "контрмеры",
+        "MM": "усиленная надлежащая проверка"
+      },
+      "increased_monitoring": [
+        "AO",
+        "BA",
+        "BO",
+        "BG",
+        "CM",
+        "CI",
+        "CD",
+        "HT",
+        "IQ",
+        "KE",
+        "KW",
+        "LA",
+        "LB",
+        "MC",
+        "NP",
+        "PG",
+        "SS",
+        "SY",
+        "VE",
+        "VN",
+        "VG",
+        "YE"
+      ]
+    },
+    "preferential_tax": {
+      "as_of": "2026-01-01",
+      "source": "Приказ Министра финансов Республики Казахстан от 12 сентября 2025 года № 492 «Об утверждении перечня государств с льготным налогообложением» (рег. № 36853, вводится в действие с 01.01.2026), приложение 1.",
+      "source_url": "https://adilet.zan.kz/rus/docs/V2500036853",
+      "codes": [
+        "AD",
+        "AG",
+        "BS",
+        "BB",
+        "BH",
+        "BZ",
+        "BN",
+        "VU",
+        "GY",
+        "GT",
+        "GD",
+        "DJ",
+        "DO",
+        "DM",
+        "CO",
+        "KM",
+        "CR",
+        "LR",
+        "LB",
+        "MU",
+        "MR",
+        "MV",
+        "MH",
+        "MC",
+        "MT",
+        "MM",
+        "NR",
+        "NG",
+        "PW",
+        "PA",
+        "WS",
+        "SM",
+        "SC",
+        "VC",
+        "KN",
+        "LC",
+        "SR",
+        "TZ",
+        "TO",
+        "TT",
+        "FJ",
+        "PH",
+        "ME",
+        "LK",
+        "JM",
+        "MO",
+        "HK",
+        "MP",
+        "AW",
+        "CW",
+        "SX",
+        "BQ",
+        "CK",
+        "NU",
+        "AI",
+        "BM",
+        "VG",
+        "GI",
+        "KY",
+        "MS",
+        "TC",
+        "IM",
+        "GG",
+        "JE",
+        "GS",
+        "IO",
+        "VI",
+        "GU",
+        "PR",
+        "TF",
+        "PF",
+        "GF"
+      ],
+      "partial": {
+        "ES": "Канарские острова",
+        "MY": "анклав Лабуан",
+        "PT": "острова Мадейра",
+        "MA": "город Танжер",
+        "US": "штат Вайоминг (и территории, перечисленные выше)"
+      }
+    },
+    "national_high_risk": {}
+  },
+  "sanctions_sources": [
+    {
+      "id": "un",
+      "name": "Сводный санкционный перечень Совета Безопасности ООН",
+      "short": "ООН",
+      "url": "https://scsanctions.un.org/resources/xml/en/consolidated.xml",
+      "format": "un",
+      "entry_url": "https://main.un.org/securitycouncil/en/content/un-sc-consolidated-list"
+    },
+    {
+      "id": "ofac_sdn",
+      "name": "OFAC Specially Designated Nationals (Минфин США)",
+      "short": "OFAC",
+      "url": "https://sanctionslistservice.ofac.treas.gov/api/PublicationPreview/exports/SDN.XML",
+      "format": "ofac_sdn",
+      "entry_url": "https://sanctionssearch.ofac.treas.gov/Details.aspx?id={ref}"
+    },
+    {
+      "id": "eu",
+      "name": "Сводный список финансовых санкций ЕС",
+      "short": "ЕС",
+      "url": "https://webgate.ec.europa.eu/fsd/fsf/public/files/xmlFullSanctionsList_1_1/content?token=dG9rZW4tMjAxNw",
+      "format": "eu_fsf",
+      "entry_url": "https://www.sanctionsmap.eu/"
+    },
+    {
+      "id": "uk",
+      "name": "UK Sanctions List (FCDO)",
+      "short": "Великобритания",
+      "url": "https://sanctionslist.fcdo.gov.uk/docs/UK-Sanctions-List.xml",
+      "format": "uk_fcdo",
+      "entry_url": "https://search-uk-sanctions-list.service.gov.uk/"
+    }
+  ]
+}

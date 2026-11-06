@@ -1,0 +1,27 @@
+# Запросы к SearXNG для сбора открытых сведений о лице.
+#
+# {name}  — ФИО как ввёл аналитик (кириллица);  {short} — «Имя Фамилия» без отчества;
+# {latin} — написание латиницей (из карточки или транслитерация);  {context} — уточнение
+# аналитика (компания, должность), если задано.
+# Запрос с {latin} или {context} пропускается, если значения нет.
+#
+# category: general | news — категория SearXNG;  language: код языка или all.
+# topic — к какому блоку портрета относятся результаты (влияет на ранжирование источников).
+queries:
+  - {topic: identity, category: general, language: ru, q: "{name}"}
+  - {topic: identity, category: general, language: ru, q: "{short} биография"}
+  - {topic: identity, category: general, language: en, q: "{latin}"}
+  - {topic: identity, category: general, language: ru, q: "{short} {context}"}
+  - {topic: positions, category: general, language: ru, q: "{short} назначен должность"}
+  - {topic: positions, category: general, language: en, q: "{latin} appointed minister OR director OR ambassador"}
+  - {topic: sanctions, category: general, language: ru, q: "{short} санкции"}
+  - {topic: sanctions, category: general, language: en, q: "{latin} sanctions"}
+  - {topic: legal, category: general, language: ru, q: "{short} уголовное дело OR обвинение OR арест"}
+  - {topic: legal, category: general, language: en, q: "{latin} charged OR investigation OR fraud OR indicted"}
+  - {topic: adverse, category: general, language: ru, q: "{short} коррупция OR отмывание OR мошенничество"}
+  - {topic: adverse, category: general, language: en, q: "{latin} corruption OR \"money laundering\" OR bribery"}
+  - {topic: relations, category: general, language: ru, q: "{short} жена OR супруга OR сын OR дочь OR брат"}
+  - {topic: companies, category: general, language: ru, q: "{short} владелец OR учредитель OR акционер OR бенефициар"}
+  - {topic: companies, category: general, language: en, q: "{latin} owner OR shareholder OR founder OR \"beneficial owner\""}
+  - {topic: news, category: news, language: ru, q: "{short}"}
+  - {topic: news, category: news, language: en, q: "{latin}"}

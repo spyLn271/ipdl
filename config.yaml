@@ -1,0 +1,43 @@
+# Базовые настройки IPDL. Переопределяются переменными окружения IPDL_* (см. .env.example):
+# IPDL_LLM__MODEL=qwen3:4b, IPDL_DB__URL=..., IPDL_AUTH__COOKIE_SECURE=false и т. д.
+env: prod
+
+log:
+  level: INFO
+  json_format: false
+
+org:
+  system_name: "IPDL"
+  home_country: "KZ"
+  authority: "Подразделение финансовой разведки"
+
+search:
+  base_url: "http://searxng:8080"
+  max_concurrency: 2
+  stagger_s: 0.6
+  max_sources: 40
+
+fetch:
+  max_pages: 16
+  respect_robots_txt: true
+
+llm:
+  base_url: "http://ollama:11434"
+  # На CPU — qwen3:4b (≈30 с на источник); на GPU — qwen3:8b или крупнее
+  model: "qwen3:8b"
+  max_sources: 10
+  max_concurrency: 2
+
+sanctions:
+  match_threshold: 88
+  update_hour_utc: 3
+
+jobs:
+  redis_url: "redis://redis:6379/0"
+  max_concurrency: 2
+  max_pending: 50
+  timeout_s: 1800
+
+auth:
+  session_ttl_hours: 12
+  cookie_secure: true
